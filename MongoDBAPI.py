@@ -9,14 +9,16 @@ class MongoAPI:
     def __init__(self, data):
         log.basicConfig(level=log.DEBUG, format='%(asctime)s %(levelname)s:\n%(message)s\n')
         # self.client = MongoClient("mongodb://localhost:27017/")  # When only Mongo DB is running on Docker.
-        self.client = MongoClient("mongodb://mymongo_1:27017/")     # When both Mongo and This application is running on
+        self.client = MongoClient("mongodb+srv://jbr:lab43210@cluster0.j5bqz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")     # When both Mongo and This application is running on
                                                                     # Docker and we are using Docker Compose
 
         database = data['database']
         collection = data['collection']
         cursor = self.client[database]
         self.collection = cursor[collection]
-        self.data = data
+      #  self.database = self.client.Lab4
+      #  self.collection = self.database.balance
+      #  self.data = data
 
     def read(self):
         log.info('Reading All Data')
@@ -26,7 +28,8 @@ class MongoAPI:
 
     def write(self, data):
         log.info('Writing Data')
-        new_document = data['Document']
+        #new_document = data['Document']
+        new_document = data
         response = self.collection.insert_one(new_document)
         output = {'Status': 'Successfully Inserted',
                   'Document_ID': str(response.inserted_id)}
@@ -50,13 +53,17 @@ class MongoAPI:
 
 @app.route('/')
 def base():
-    return Response(response=json.dumps({"Status": "UP"}),
+    return Response(response=json.dumps({"Status": "Running"}),
                     status=200,
                     mimetype='application/json')
 
 
-@app.route('/mongodb', methods=['GET'])
+@app.route('/balance', methods=['GET'])
 def mongo_read():
+   # client = request.args.get('client')
+   # coin = request.args.get('coin')
+   # quantity = request.args.get('quantity')
+   # date = request.args.get('date')
     data = request.json
     if data is None or data == {}:
         return Response(response=json.dumps({"Error": "Please provide connection information"}),
@@ -64,15 +71,16 @@ def mongo_read():
                         mimetype='application/json')
     obj1 = MongoAPI(data)
     response = obj1.read()
+    print("data read")
     return Response(response=json.dumps(response),
                     status=200,
                     mimetype='application/json')
 
 
-@app.route('/mongodb', methods=['POST'])
+@app.route('/balance', methods=['POST'])
 def mongo_write():
     data = request.json
-    if data is None or data == {} or 'Document' not in data:
+    if data is None or data == {} or 'Transaction' not in data:
         return Response(response=json.dumps({"Error": "Please provide connection information"}),
                         status=400,
                         mimetype='application/json')
@@ -82,7 +90,7 @@ def mongo_write():
                     status=200,
                     mimetype='application/json')
 
-@app.route('/mongodb', methods=['PUT'])
+@app.route('/balance', methods=['PUT'])
 def mongo_update():
     data = request.json
     if data is None or data == {} or 'Filter' not in data:
@@ -96,7 +104,7 @@ def mongo_update():
                     mimetype='application/json')
 
 
-@app.route('/mongodb', methods=['DELETE'])
+@app.route('/balance', methods=['DELETE'])
 def mongo_delete():
     data = request.json
     if data is None or data == {} or 'Filter' not in data:

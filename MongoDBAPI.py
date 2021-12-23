@@ -1,9 +1,10 @@
 from flask import Flask, request, json, Response
+from flask_cors import cross_origin
 from pymongo import MongoClient
 import logging as log
 
 app = Flask(__name__)
-
+#CORS(app)
 
 class MongoAPI:
     def __init__(self, data):
@@ -35,10 +36,12 @@ class MongoAPI:
                   'Document_ID': str(response.inserted_id)}
         return output
 
-    def update(self):
+    def update(self, data):
         log.info('Updating Data')
-        filt = self.data['Filter']
-        updated_data = {"$set": self.data['DataToBeUpdated']}
+        filt = data['Filter']
+        print("dedfwff")
+        print(filt)
+        updated_data = {"$set": data['DataToBeUpdated']}
         response = self.collection.update_one(filt, updated_data)
         output = {'Status': 'Successfully Updated' if response.modified_count > 0 else "Nothing was updated."}
         return output
@@ -59,18 +62,20 @@ def base():
 
 
 @app.route('/balance', methods=['GET'])
+@cross_origin()
 def mongo_read():
    # client = request.args.get('client')
    # coin = request.args.get('coin')
    # quantity = request.args.get('quantity')
    # date = request.args.get('date')
-    data = request.json
+    data = {"database": "Lab4","collection": "balance"}
     if data is None or data == {}:
         return Response(response=json.dumps({"Error": "Please provide connection information"}),
                         status=400,
                         mimetype='application/json')
     obj1 = MongoAPI(data)
     response = obj1.read()
+  #  response.headers.add('Access-Control-Allow-Origin', '*')
     print("data read")
     return Response(response=json.dumps(response),
                     status=200,
@@ -78,6 +83,7 @@ def mongo_read():
 
 
 @app.route('/balance', methods=['POST'])
+@cross_origin()
 def mongo_write():
     data = request.json
     if data is None or data == {} or 'Transaction' not in data:
@@ -91,14 +97,16 @@ def mongo_write():
                     mimetype='application/json')
 
 @app.route('/balance', methods=['PUT'])
+@cross_origin()
 def mongo_update():
     data = request.json
+    print(data)
     if data is None or data == {} or 'Filter' not in data:
         return Response(response=json.dumps({"Error": "Please provide connection information"}),
                         status=400,
                         mimetype='application/json')
     obj1 = MongoAPI(data)
-    response = obj1.update()
+    response = obj1.update(data)
     return Response(response=json.dumps(response),
                     status=200,
                     mimetype='application/json')

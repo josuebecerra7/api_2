@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>CoinsHint </title>
+  <!-- plugins:css -->
+  <link href="static/css/www_rate_calc_frame.css" rel="stylesheet" title="stylesheet" type="text/css" />
+
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <link rel="stylesheet" href="static/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+
+  <link rel="stylesheet" href="static/js/select.dataTables.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="static/css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="static/images/favicon.png" />
+</head>
+<body>
+  <div class="container-scroller"> 
+
+      <div>
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="home-tab">
+                <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                  <div>
+                    <h1>Crypto Currencies</h1>
+                   
+                  </div>
+                </div>
+                <div class="tab-content tab-content-basic">
+                  <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview"> 
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="statistics-details d-flex align-items-center justify-content-between">
+                          <div>
+
+                            <p style="cursor: pointer;" class="statistics-title" >Bitcoin (BTC)</p>
+                            <h3 class="rate-percentage" id="btc">
+
+                              ${{coinprice["bitcoin"]["usd"]}}
+
+                            </h3>
+
+                          </div>
+                          <div>
+                            <p style="cursor: pointer;" class="statistics-title" >Ethereum (ETH)</p>
+                            <h3 class="rate-percentage" id="eth">${{coinprice["ethereum"]["usd"]}}</h3>
+
+                          </div>
+                          <div>
+                            <p style="cursor: pointer;" class="statistics-title" >DogeCoin (DOGE)</p>
+                            <h3 class="rate-percentage" id="doge">${{coinprice["dogecoin"]["usd"]}}</h3>
+
+                          </div>
+                          <div class="d-none d-md-block">
+                            <p style="cursor: pointer;" class="statistics-title">Litecoin (LTC)</p>
+                            <h3 class="rate-percentage" id="ltc">${{coinprice["litecoin"]["usd"]}}</h3>
+
+                          </div>
+                          <div class="d-none d-md-block">
+                            <p style="cursor: pointer;" class="statistics-title" >Cardano (ADA)</p>
+                            <h3 class="rate-percentage"id="ada" >${{coinprice["cardano"]["usd"]}}</h3>
+
+                          </div>
+                          <div class="d-none d-md-block">
+                            <p style="cursor: pointer;" class="statistics-title" >Ripple (XRP)</p>
+                            <h3 class="rate-percentage"id="xrp">${{coinprice["ripple"]["usd"]}}</h3>
+                            <!--<p class="text-success d-flex"><i class="mdi mdi-menu-down"></i><span>+0.8%</span></p>-->
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-8 d-flex flex-column">
+                        <div class="row flex-grow">
+                          <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card">
+                            <div class="card card-rounded">
+                              <div class="card-body">
+                                <div class="d-sm-flex justify-content-between align-items-start">
+                                  <div>
+                                   <h4 class="card-title card-title-dash">Price Chart</h4>
+
+                                  </div>
+								                      <div class="dropdown">
+                                      <button type="button" id="interval" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">30 Days</button>
+                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+
+                                      <p id="interval-time-1" style="cursor: pointer;" class="dropdown-item">30 Days</p>
+                                      <p id="interval-time-2" style="cursor: pointer;" class="dropdown-item">7 Days</p>
+                                      <p id="interval-time-3" style="cursor: pointer;" class="dropdown-item">1 Day</p>
+
+                                      </div>
+                                    </div>
+
+                                </div>
+                                <div>
+                                  <canvas id="myChart" style="width:100%;max-width:800px"></canvas>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-4 d-flex flex-column">
+                        <div class="row flex-grow">
+                          <div class="col-md-6 col-lg-12 grid-margin stretch-card">
+                            <div class="card bg-primary card-rounded">
+                              <div class="card-body pb-0">
+                                <h2>Convert Currencies<br></h2>
+
+                                <div class="row">
+                                  <div class="col-sm-4">
+                                    
+                                    <div id="cc_customize_form_table" class="form_table">
+  
+                                      <div id="cc_customize_from_label_cell" >
+                                        <label id="cc_customize_from">From</label>
+                                      </div>
+                          
+                                      <div id="cc_customize_from_input_cell">
+                          
+                                      
+                                      <div id="cc_customize_from_form_input" class="form_input from_form_input select_type_input">
+                                      <select name="from" onchange="keyHandler(this.form);" autocomplete="off" id="from" class="select_type_input form_cc_customize_field form_label_bgr form-control" data--h-t-m-l-tags-allow="0" data--validation-error-message="Please enter correct information!">
+                                      <option value="" selected="selected">Please select</option>
+                                      <option value="btc">BITCOIN</option>
+                                      <option value="usd">US Dollar</option>
+                                      </select>            </div>
+                                          </div>
+                                          </div><!-- form_table_row -->
+                                        <div id="cc_customize_to_row" class="form-group form_table_row to_row">
+                          
+                                  
+                                  
+                                      <div id="cc_customize_to_label_cell" class="form_label_cell to_label_cell"><label id="cc_customize_to" class="form_label" for="to">To</label></div>
+                          
+                                                  <div id="cc_customize_to_input_cell" class="form_input_cell to_input_cell">
+
+                                      <div id="cc_customize_to_form_input">
+                                      <select name="to" onchange="keyHandler(this.form);" autocomplete="off" id="to" class="select_type_input form_cc_customize_field form_label_bgr form-control" data--validate-regular-expression="edit" data--h-t-m-l-tags-allow="0" data--validation-error-message="Please enter correct information!">
+                                      <option value="" selected="selected">Please select</option>
+                                      <option value="btc">BITCOIN</option>
+                                      <option value="usd">US Dollar</option>
+                                      </select>
+                                    </div>
+                                          </div>
+                                          </div><!-- form_table_row -->
+                                  </div>
+                                  <div class="col">
+                                    <!-- column 2-->
+                                    <div class="row">
+                                    Quantity:
+                                      <div class="input-group mb-3">
+                                       <div class="input-group-prepend">
+                                          <span class="input-group-text" id="inputGroup-sizing-default">$</span>
+                                       </div>
+                                       <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                    </div>
+                                    <div class="row">
+                                      <br>
+                                        <button type="button" class="btn btn-light">Convert</button>
+                                    </div>
+                                  </div>
+                                 
+                                </div>
+
+                                </div>
+                                <div class="row">
+                                  <h2>Balance<br></h2>
+                                </div>
+                                <div class="row">
+                                  <div class="col-sm-4">
+                                    <h4>Bitcoin</h4>
+                                  </div>
+                                  <div class="col-sm-4">
+                                    <h4>USD</h4>
+                                  </div>
+                                  <div class="col-sm-4">
+                                    <button type="button" class="btn btn-light">Update</button>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-sm-4">
+                                    <h3>2</h3>
+                                  </div>
+                                  <div class="col-sm-4">
+                                    <h3>0</h3>
+                                  </div>
+                                  <div class="col-sm-4">
+                                    <!-- column 3-->
+                                  </div>
+                                </div>
+                              </div>
+
+
+									<br>
+                                  </div>
+
+                                  <div class="col-sm-8">
+                                    <div class="status-summary-chart-wrapper pb-4">
+										                    <br><h1 style="text-align:center"></h1>
+                                      <!--<canvas id="status-summary"></canvas>-->
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+
+                          </div>
+
+                        </div>
+                      </div>
+
+                    </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+
+  <!-- jquery cdn -->
+
+  <!-- plugins:js -->
+  <script src="static/vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="static/vendors/chart.js/Chart.min.js"></script>
+
+
+
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="static/js/off-canvas.js"></script>
+  <script src="static/js/hoverable-collapse.js"></script>
+  <script src="static/js/template.js"></script>
+  <script src="static/js/settings.js"></script>
+  <script src="static/js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="static/js/dashboard.js"></script>
+  <script src="static/js/Chart.roundedBarCharts.js"></script>
+  <!-- End custom js for this page-->
+  <!-- JS script that connects to DB using a restfulAPI-->
+  <script src="static/js/database.js"></script>
+
+  <script>
+    $(document).ready(function(){
+      setInterval(function(){
+        $.ajax({
+          url: `/get-price`,
+          success: function( result ) {
+          console.log(result)
+          $("#btc").text(result.price.bitcoin.usd)
+          $("#eth").text(result.price.ethereum.usd)
+          $("#doge").text(result.price.dogecoin.usd)
+          $("#xrp").text(result.price.ripple.usd)
+          $("#ada").text(result.price.cardano.usd)
+          $("#ltc").text(result.price.litecoin.usd)
+          }
+        })
+      },60*1000)
+      $(".statistics-title").on("click",function(){
+        var x= $(this).text()
+        var coinName=x.split(" ")[0].toLowerCase()
+        init(coinName)
+        
+      })
+      init('bitcoin')
+      
+  })
+  function init(coinName){
+
+    var state = $("#interval").text()
+    state = state.split(" ")[0]
+    console.log(state)
+    $("#interval-time-1").on("click",function(){
+        $("#interval").text("30 Days")
+        
+        $.ajax({
+          url: `/get?coin=${coinName}&time=30`,
+          success: function( result ) {
+            console.log(result)
+            loadData(result.time,result.chart_price,coinName)
+          }
+        })
+      })
+      $("#interval-time-2").on("click",function(){
+        $("#interval").text("7 Days")
+        $.ajax({
+          url: `/get?coin=${coinName}&time=7`,
+          success: function( result ) {
+            console.log(result)
+            loadData(result.time,result.chart_price,coinName)
+          }
+        })
+      })
+      $("#interval-time-3").on("click",function(){
+        $("#interval").text("1 Day")
+        $.ajax({
+          url: `/get?coin=${coinName}&time=1`,
+          success: function( result ) {
+            console.log(result)
+            loadData(result.time,result.chart_price,coinName)
+          }
+        })
+      })
+      $.ajax({
+        url: `/get?coin=${coinName}&time=${state}`,
+        success: function( result ) {
+          console.log(result)
+          loadData(result.time,result.chart_price,coinName)
+        }
+      })
+  }
+  function loadData(x,y,coinName){
+    
+    var xValues =x ;
+    var yValues = y;
+    new Chart("myChart", {
+      type: "line",
+      data: {
+        labels: xValues,
+        datasets: [{
+
+          data: yValues,
+          label: coinName,
+          fill: true,
+          lineTension: 0,
+          borderColor: "rgba(0,0,255,1)",
+          borderWidth: 0.5
+        }]
+      },
+      options: {
+              elements: {
+                    point:{
+                        radius: 0
+                          }
+                        },
+                        scales: {
+            xAxes: [{
+
+             display: false,
+             //ticks: function (a,b,c){console.log(a,b,c)}
+            // type: 'time',
+            //   time: {
+            //   unit: 'month'
+            //         }
+
+
+        }]
+
+      }
+                },
+
+      }
+    );
+
+  }
+
+
+
+
+
+  var apiTargetHtmlObj = document.getElementById("demo-rate-convert"); 
+  var tmScript = document.createElement("script"); 
+  tmScript.src = "https://vrt.transfermate.com/en/exchange_rates_api.asp"; 
+  document.getElementsByTagName("head")[0].appendChild(tmScript);
+    </script>
+    <noscript><br/><span style="color: red;">Please enable your JavaScript.</span></noscript>
+</body>
+
+</html>
+

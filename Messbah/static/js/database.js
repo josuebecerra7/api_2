@@ -6,6 +6,7 @@ $(document).ready(function(){
 		ajaxGet();
 	});
 
+
     function ajaxGet(){
         var settings = {
             "url": "http://localhost:5001/balance",
@@ -20,6 +21,8 @@ $(document).ready(function(){
             document.getElementById("usd_div").innerHTML=response[db_len].Transaction.quantity[1];
           });
     }
+
+
     
   
 });

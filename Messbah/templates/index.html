@@ -120,42 +120,25 @@
                                 <h2>Convert Currencies<br></h2>
 
                                 <div class="row">
-                                  <div class="col-sm-4">
-                                    
-                                    <div id="cc_customize_form_table" class="form_table">
-  
-                                      <div id="cc_customize_from_label_cell" >
-                                        <label id="cc_customize_from">From</label>
-                                      </div>
-                          
-                                      <div id="cc_customize_from_input_cell">
-                          
-                                      
-                                      <div id="cc_customize_from_form_input" class="form_input from_form_input select_type_input">
-                                      <select name="from" onchange="keyHandler(this.form);" autocomplete="off" id="from" class="select_type_input form_cc_customize_field form_label_bgr form-control" data--h-t-m-l-tags-allow="0" data--validation-error-message="Please enter correct information!">
-                                      <option value="" selected="selected">Please select</option>
-                                      <option value="btc">BITCOIN</option>
-                                      <option value="usd">US Dollar</option>
-                                      </select>            </div>
-                                          </div>
-                                          </div><!-- form_table_row -->
-                                        <div id="cc_customize_to_row" class="form-group form_table_row to_row">
-                          
-                                  
-                                  
-                                      <div id="cc_customize_to_label_cell" class="form_label_cell to_label_cell"><label id="cc_customize_to" class="form_label" for="to">To</label></div>
-                          
-                                                  <div id="cc_customize_to_input_cell" class="form_input_cell to_input_cell">
-
-                                      <div id="cc_customize_to_form_input">
-                                      <select name="to" onchange="keyHandler(this.form);" autocomplete="off" id="to" class="select_type_input form_cc_customize_field form_label_bgr form-control" data--validate-regular-expression="edit" data--h-t-m-l-tags-allow="0" data--validation-error-message="Please enter correct information!">
-                                      <option value="" selected="selected">Please select</option>
-                                      <option value="btc">BITCOIN</option>
-                                      <option value="usd">US Dollar</option>
+                                  <div class="col-sm">
+                                    <!-- select menu-->
+                                    From:
+                                    <div class="input-group mb-3">
+                                      <select class="custom-select" id="selectFrom">
+                                        <option selected>Select...</option>
+                                        <option value="1">BTC</option>
+                                        <option value="2">USD</option>
                                       </select>
                                     </div>
-                                          </div>
-                                          </div><!-- form_table_row -->
+                                    To:
+                                    <div class="input-group mb-3">
+                                      <select class="custom-select" id="selectTo">
+                                        <option selected>Select...</option>
+                                        <option value="1">BTC</option>
+                                        <option value="2">USD</option>
+                                      </select>
+                                    </div>
+
                                   </div>
                                   <div class="col">
                                     <!-- column 2-->
@@ -165,11 +148,11 @@
                                        <div class="input-group-prepend">
                                           <span class="input-group-text" id="inputGroup-sizing-default">$</span>
                                        </div>
-                                       <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                       <input type="text" id="quantity" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                                     </div>
                                     <div class="row">
                                       <br>
-                                        <button type="button" class="btn btn-light">Purchase</button>
+                                        <button id="purchaseButton" type="button" class="btn btn-light">Purchase</button>
                                     </div>
                                   </div>
                                  
@@ -275,6 +258,7 @@
   <!-- End custom js for this page-->
   <!-- JS script that connects to DB using a restfulAPI-->
   <script src="static/js/database.js"></script>
+  <script src="static/js/convert.js"></script>
 
   <script>
     $(document).ready(function(){

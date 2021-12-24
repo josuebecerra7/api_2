@@ -1,5 +1,5 @@
 # Step 1 select default OS image
-FROM alpine
+FROM python:3-alpine
 
 
 # # Step 2 tell what you want to do
@@ -15,7 +15,7 @@ COPY /requirements.txt /app
 
 RUN pip3 install -r requirements.txt
 
-COPY ["MongoDB API.py", "/app"]
+COPY ["app_mongodb.py", "/app"]
 
 # Exposing an internal port
 EXPOSE 5001
@@ -26,6 +26,6 @@ EXPOSE 5001
 ENTRYPOINT [ "python3" ]
 
 # These commands will be replaced if user provides any command by himself
-CMD ["MongoDB API.py"]
+CMD ["app_mongodb.py"]
 
 

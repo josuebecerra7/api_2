@@ -3,6 +3,7 @@ import random
 from datetime import datetime
 
 url = 'http://localhost:5001/balance'
+
 now = datetime.now()
 
 timestamp = datetime.timestamp(now)
